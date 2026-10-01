@@ -1,0 +1,67 @@
+plugins {
+    id 'fabric-loom' version '1.14.4'
+}
+
+base {
+    archivesName = project.archives_base_name + '-' + project.minecraft_version
+}
+
+version = project.mod_version
+group = project.maven_group
+
+repositories {
+    // 阿里云公共maven（优先拉普通依赖：zxing、jlayer等）
+    maven { url 'https://maven.aliyun.com/repository/public' }
+    // Fabric官方maven，放前面，专门拉fabric-api
+    maven { url "https://maven.fabricmc.net/" }
+    maven { url 'https://maven.wispforest.io' }
+    maven { url 'https://jitpack.io' }
+    maven { url 'https://maven.terraformersmc.com/releases/' }
+}
+
+
+dependencies {
+    minecraft "com.mojang:minecraft:${project.minecraft_version}"
+    mappings "net.fabricmc:yarn:${project.yarn_mappings}:v2"
+    modImplementation "net.fabricmc:fabric-loader:${project.loader_version}"
+    modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
+    modImplementation "com.github.sakura-ryoko:malilib:${project.malilib_version}"
+    modCompileOnly "com.terraformersmc:modmenu:${project.modmenu_version}"
+
+    // 以支持 mp3 播放
+    implementation("javazoom:jlayer:1.0.1")
+    // MP3SPI，用于解码mp3文件
+    implementation("com.googlecode.soundlibs:mp3spi:1.9.5.4")
+    // Tritonus Share，提供音频处理服务
+    implementation("com.googlecode.soundlibs:tritonus-share:0.3.7.4")
+    // JFlac Codec，用于解码flac文件
+    implementation("org.jflac:jflac-codec:1.5.2")
+    // ZXing Core，用于二维码处理
+    implementation("com.google.zxing:core:3.5.1")
+    include("javazoom:jlayer:1.0.1")
+    include("com.googlecode.soundlibs:mp3spi:1.9.5.4")
+    include("com.googlecode.soundlibs:tritonus-share:0.3.7.4")
+    include("org.jflac:jflac-codec:1.5.2")
+    include("com.google.zxing:core:3.5.1")
+}
+
+processResources {
+    inputs.property "version", project.version
+
+    filesMatching("fabric.mod.json") {
+        expand "version": project.version,
+                "minecraft_version": minecraft_version,
+                "malilib_version": malilib_version.split("-").last()
+    }
+}
+
+tasks.withType(JavaCompile).configureEach {
+    it.options.release = 21
+    it.options.encoding = "UTF-8"
+    sourceCompatibility = JavaVersion.VERSION_21
+    targetCompatibility = JavaVersion.VERSION_21
+}
+
+jar {
+    from("LICENSE")
+}

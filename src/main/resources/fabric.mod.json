@@ -1,0 +1,44 @@
+{
+  "schemaVersion": 1,
+  "id": "cloudmusic",
+  "version": "${version}",
+  "name": "New CloudMusic",
+  "description": "Use Netease Cloud Music in MC !!!\n\nOriginal Mod by FengLiuFeseliud (MIT License).\nUnofficial port to 1.21.11 by 757_BROHXC.\nThis is a beginner's first port project, with AI-assisted code (Doubao, DeepSeek).\nThis is an unofficial port, not affiliated with the original author.",
+  "authors": [
+    "FengLiuFeseliud (Original Author)",
+    "757_BROHXC (1.21.11 Port)"
+  ],
+  "contributors": [
+    "Doubao",
+    "DeepSeek"
+  ],
+  "contact": {
+    "homepage": "https://github.com/757H9X2C/New-CloudMusic",
+    "sources": "https://github.com/757H9X2C/New-CloudMusic",
+    "issues": "https://github.com/757H9X2C/New-CloudMusic/issues"
+  },
+  "license": "MIT",
+  "icon": "assets/cloudmusic/icon.png",
+  "environment": "client",
+  "entrypoints": {
+    "client": [
+      "fengliu.cloudmusic.CloudMusicClient"
+    ],
+    "modmenu": [
+      "fengliu.cloudmusic.compat.ModMenu"
+    ]
+  },
+  "mixins": [
+    {
+      "config": "cloudmusic.mixins.json",
+      "environment": "client"
+    }
+  ],
+  "depends": {
+    "minecraft": "~${minecraft_version}",
+    "java": ">=21",
+    "fabricloader": ">=0.18.0",
+    "fabric-api": ">=0.141.1",
+    "malilib": ">=0.27.3"
+  }
+}
